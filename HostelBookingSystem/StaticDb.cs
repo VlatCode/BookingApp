@@ -28,16 +28,13 @@ namespace HostelBookingSystem
         public static List<Room> Rooms = new List<Room>
         {
             new Room {
-                    Id = 0,
-                    Availability = true,
+                    Id = 0
             },
             new Room {
-                    Id = 1,
-                    Availability = true
+                    Id = 1
             },
             new Room {
-                    Id = 2,
-                    Availability = true
+                    Id = 2
             }
         };
 

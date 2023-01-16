@@ -3,7 +3,8 @@
     public class Room
     {
         public int Id { get; set; }
-        public bool Availability { get; set; }
+        public List<Reservation> Reservations = new List<Reservation>();
+
         public int HostelId { get; set; }
     }
 }
