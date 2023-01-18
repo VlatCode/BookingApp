@@ -17,7 +17,6 @@ namespace HostelBookingSystem
                     Name = "4 Star Hostel",
                     NumberOfRooms = 5
             },
-
             new Hostel {
                     Id = 2,
                     Name = "5 Star Hostel",
@@ -42,27 +41,15 @@ namespace HostelBookingSystem
         {
             new Reservation {
                     Id = 0,
-                    MainGuest = new Guest
-                    {
-                        Id = 1,
-                        Name = "Vlatko",
-                    }
+                    MainGuestId = 0
             },
             new Reservation {
                     Id = 1,
-                    MainGuest = new Guest
-                    {
-                        Id = 1,
-                        Name = "Viki",
-                    }
+                    MainGuestId = 1
             },
             new Reservation {
                     Id = 2,
-                    MainGuest = new Guest
-                    {
-                        Id = 1,
-                        Name = "Zoran",
-                    }
+                    MainGuestId = 2
             },
         };
     }

@@ -51,9 +51,9 @@ namespace HostelBookingSystem.Controllers
                 {
                     return BadRequest("Please enter reservation number.");
                 }
-                if (string.IsNullOrEmpty(reservation.MainGuest.Name))
+                if (reservation.MainGuestId == null)
                 {
-                    return BadRequest("Please enter a name.");
+                    return BadRequest("Field must not be empty.");
                 }
                 // VALIDATE ROOM AVAILABILITY
                 //if (room.Availability != true)
@@ -82,6 +82,30 @@ namespace HostelBookingSystem.Controllers
             return Ok(reservation);
         }
 
-        //[HttpPut]
+        [HttpPut]
+        public IActionResult Update([FromBody] Reservation reservation, int id)
+        {
+            Reservation reservationDb = StaticDb.Reservations.Find(x => x.Id == id);
+            if (reservationDb == null)
+            {
+                return BadRequest("Reservation not found.");
+            }
+            //if (reservationDb.MainGuestId == null)
+            //{
+            //    return BadRequest("Reservation not found.");
+            //}
+            //if (reservationDb.StartDate == null || reservationDb.EndDate == null)
+            //{
+            //    return BadRequest("Reservation not found.");
+            //}
+
+            // Update
+            reservationDb.Id = reservation.Id;
+            reservationDb.MainGuestId = reservation.MainGuestId;
+            reservationDb.StartDate = reservation.StartDate;
+            reservationDb.EndDate = reservation.EndDate;
+
+            return Ok(reservationDb);
+        }
     }
 }

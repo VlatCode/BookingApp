@@ -1,4 +1,7 @@
-﻿using HostelBookingSystem.Models;
+﻿using HostelBookingSystem.DTOs;
+using HostelBookingSystem.Models;
+using HostelBookingSystem.Services.Interfaces;
+using HostelBookingSystem.Shared.CustomExceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,27 +11,20 @@ namespace HostelBookingSystem.Controllers
     [ApiController]
     public class HostelController : ControllerBase
     {
-        [HttpGet]
-        public ActionResult<List<Hostel>> GetAll()
+        private IHostelService _hostelService;
+
+        public HostelController(IHostelService hostelService)
         {
-            return Ok(StaticDb.Hostels);
+            _hostelService = hostelService;
         }
 
-        [HttpGet("index")]
-        public ActionResult<Hostel> GetByIndex(int index)
+        // GET ALL HOSTELS
+        [HttpGet]
+        public ActionResult<List<HostelDto>> GetAll()
         {
             try
             {
-                if (index < 0)
-                {
-                    return BadRequest("The index can not be negative");
-                }
-                if (index >= StaticDb.Hostels.Count)
-                {
-                    return NotFound($"There is no resource on index {index}");
-                }
-
-                return Ok(StaticDb.Hostels[index]);
+                return Ok(_hostelService.GetAllHostels());
             }
             catch (Exception e)
             {
@@ -36,18 +32,37 @@ namespace HostelBookingSystem.Controllers
             }
         }
 
-        [HttpPost]
-        public IActionResult Add([FromBody] Hostel hostel)
+        // GET HOSTEL BY ID
+        [HttpGet("{id}")]
+        public ActionResult<HostelDto> GetById(int id)
         {
             try
             {
-                if (string.IsNullOrEmpty(hostel.Name))
-                {
-                    return BadRequest("Please add hostel name!");
-                }
+                var hostelDto = _hostelService.GetById(id);
+                return Ok(hostelDto);
+            }
+            catch (NotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred! Contact the admin!");
+            }
+        }
 
-                StaticDb.Hostels.Add(hostel);
+        // ADD HOSTEL
+        [HttpPost("addHostel")]
+        public IActionResult AddHostel([FromBody] AddHostelDto addHostelDto)
+        {
+            try
+            {
+                _hostelService.AddHostel(addHostelDto);
                 return StatusCode(StatusCodes.Status201Created, "Hostel added.");
+            }
+            catch (InvalidEntryException e)
+            {
+                return BadRequest(e.Message);
             }
             catch (Exception e)
             {
