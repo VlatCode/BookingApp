@@ -14,7 +14,7 @@ namespace HostelBookingSystem.DataAccess.Implementations
         // we are dependent on the DataContext - it's a bridge to the database
         private DataContext _bookingAppDbContext;
 
-        public ReservationRepository(DataContext bookingAppDbContext)
+        public ReservationRepository(DataContext bookingAppDbContext) // Dependency Injection
         {
             _bookingAppDbContext = bookingAppDbContext;
         }
@@ -33,7 +33,9 @@ namespace HostelBookingSystem.DataAccess.Implementations
 
         public List<Reservation> GetAll()
         {
-            throw new NotImplementedException();
+            return _bookingAppDbContext.Reservations
+                .Include(x => x.Room) // Join Reservations table with Users table. Will give us Room info
+                .ToList();
         }
 
         public Reservation GetById(int id)

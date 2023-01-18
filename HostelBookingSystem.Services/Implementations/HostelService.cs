@@ -16,6 +16,9 @@ namespace HostelBookingSystem.Services.Implementations
     {
         private IRepository<Hostel> _hostelRepository;
 
+        // At first, we need to make an instance of the repository
+        // because it needs to be a given parameter for the service
+        // because the service is needed for instantiating the controller
         public HostelService(IRepository<Hostel> hostelRepository)
         {
             _hostelRepository = hostelRepository;
@@ -35,7 +38,12 @@ namespace HostelBookingSystem.Services.Implementations
             {
                 throw new NotFoundException($"Hostel with id {id} was not found!");
             }
+
             HostelDto hostelDto = hostelDb.ToHostelDto();
+
+            hostelDto.NumberOfRooms = hostelDb.Rooms.Count;
+            Console.WriteLine(hostelDb.Rooms.Count);
+
             return hostelDto;
         }
 
@@ -52,8 +60,26 @@ namespace HostelBookingSystem.Services.Implementations
             }
             // 2. Map to domain model
             Hostel newHostel = addHostelDto.ToHostel();
+            List<Room> rooms = new List<Room>();
+
+            for (int i = 0; i < addHostelDto.NumberOfRooms; i++)
+            {
+                rooms.Add(new Room());
+            }
+
+            newHostel.Rooms = rooms;
             // 3. Add to db
             _hostelRepository.Add(newHostel);
+        }
+
+        public void DeleteHostel(int id)
+        {
+            Hostel hostelDb = _hostelRepository.GetById(id);
+            if(hostelDb == null)
+            {
+                throw new NotFoundException($"Hostel with id {id} was not found!");
+            }
+            _hostelRepository.Delete(hostelDb);
         }
     }
 }

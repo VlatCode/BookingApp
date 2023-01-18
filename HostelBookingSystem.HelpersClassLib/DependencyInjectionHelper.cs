@@ -32,7 +32,7 @@ namespace HostelBookingSystem.HelpersClassLib
         {
             services.AddTransient<IHostelService, HostelService>();
             services.AddTransient<IRoomService, RoomService>();
-            //services.AddTransient<IReservationService, ReservationService>();
+            services.AddTransient<IReservationService, ReservationService>();
         }
     }
 }

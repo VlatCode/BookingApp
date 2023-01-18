@@ -5,6 +5,8 @@ using HostelBookingSystem.Mappers;
 using HostelBookingSystem.Models;
 using HostelBookingSystem.Services.Interfaces;
 using HostelBookingSystem.Shared.CustomExceptions;
+using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,17 +17,22 @@ namespace HostelBookingSystem.Services.Implementations
 {
     public class RoomService : IRoomService
     {
-        private IRepository<Room> _roomRepository;
+        private readonly IRepository<Room> _roomRepository;
+        private readonly IRepository<Hostel> _hostelRepository;
 
-        public RoomService(IRepository<Room> roomRepository)
+        // At first, we need to make an instance of the repository
+        // because it is needed as a parameter to instantiate the service
+        public RoomService(IRepository<Room> roomRepository, IRepository<Hostel> hostelRepository)
         {
             _roomRepository = roomRepository;
+            _hostelRepository = hostelRepository;
         }
 
         public List<RoomDto> GetAllRooms()
         {
             var roomsDb = _roomRepository.GetAll();
-            // .ToRoomDto() comes from the mapper
+            // .ToRoomDto() comes from the RoomMapper
+            // We can use LINQ on it because it's an extension method in the RoomMapper
             return roomsDb.Select(x => x.ToRoomDto()).ToList();
         }
 
@@ -40,15 +47,17 @@ namespace HostelBookingSystem.Services.Implementations
             return roomDto;
         }
 
-        public void AddRoom(AddRoomDto addRoomDto)
+        public void AddRoom(AddRoomDto room)
         {
             // 1. Validate the data that we receive
-            if (addRoomDto.Hostel == null)
+            Hostel hostelDb = _hostelRepository.GetById(room.HostelId);
+            if (hostelDb == null)
             {
-                throw new InvalidEntryException("Invalid entry. Try again.");
+                throw new NotFoundException($"Hostel with id {room.HostelId} does not exist!");
             }
             // 2. Map to domain model
-            Room newRoom = addRoomDto.ToRoom();
+            Room newRoom = room.ToRoom();
+            newRoom.Hostel = hostelDb;
             // 3. Add to db
             _roomRepository.Add(newRoom);
         }

@@ -55,9 +55,6 @@ namespace HostelBookingSystem.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NumberOfRooms")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("Hostels");
@@ -72,9 +69,6 @@ namespace HostelBookingSystem.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("EndDate")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MainGuestId")
                         .HasColumnType("int");
 
                     b.Property<int>("RoomId")

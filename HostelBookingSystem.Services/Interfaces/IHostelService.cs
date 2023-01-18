@@ -12,5 +12,6 @@ namespace HostelBookingSystem.Services.Interfaces
         List<HostelDto> GetAllHostels(); 
         HostelDto GetById(int id);
         void AddHostel(AddHostelDto hostel);
+        void DeleteHostel(int id);
     }
 }

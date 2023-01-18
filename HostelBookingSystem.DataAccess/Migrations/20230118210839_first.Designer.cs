@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HostelBookingSystem.DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230117090107_initial")]
-    partial class initial
+    [Migration("20230118210839_first")]
+    partial class first
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,9 +58,6 @@ namespace HostelBookingSystem.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NumberOfRooms")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("Hostels");
@@ -75,9 +72,6 @@ namespace HostelBookingSystem.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("EndDate")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MainGuestId")
                         .HasColumnType("int");
 
                     b.Property<int>("RoomId")

@@ -33,10 +33,6 @@ namespace HostelBookingSystem.DataAccess
                 .Property(x => x.Name)
                 .IsRequired();
             modelBuilder.Entity<Hostel>()
-                .Property(x => x.NumberOfRooms)
-                .IsRequired();
-            // Relation
-            modelBuilder.Entity<Hostel>()
                 .HasMany(x => x.Rooms)
                 .WithOne(x => x.Hostel);
 
@@ -57,9 +53,6 @@ namespace HostelBookingSystem.DataAccess
                 .Property(x => x.Id)
                 .IsRequired();
             modelBuilder.Entity<Reservation>()
-                .Property(x => x.MainGuestId)
-                .IsRequired();
-            modelBuilder.Entity<Reservation>()
                 .Property(x => x.StartDate)
                 .IsRequired();
             modelBuilder.Entity<Reservation>()
@@ -70,9 +63,7 @@ namespace HostelBookingSystem.DataAccess
                 .HasOne(x => x.Room)
                 .WithMany(x => x.Reservations)
                 .HasForeignKey(x => x.RoomId);
-            modelBuilder.Entity<Reservation>()
-                .HasMany(x => x.Guests)
-                .WithOne(x => x.Reservation);
+            
 
             ////////////////////////////
             // Guest

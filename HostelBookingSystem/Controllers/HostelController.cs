@@ -13,6 +13,8 @@ namespace HostelBookingSystem.Controllers
     {
         private IHostelService _hostelService;
 
+        // The service is a parameter for the controller
+        // because it's required for the controller to be instantiated
         public HostelController(IHostelService hostelService)
         {
             _hostelService = hostelService;
@@ -58,11 +60,29 @@ namespace HostelBookingSystem.Controllers
             try
             {
                 _hostelService.AddHostel(addHostelDto);
-                return StatusCode(StatusCodes.Status201Created, "Hostel added.");
+                return StatusCode(StatusCodes.Status201Created);
             }
             catch (InvalidEntryException e)
             {
                 return BadRequest(e.Message);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred! Contact the admin!");
+            }
+        }
+
+        [HttpDelete("deleteHostel")]
+        public IActionResult DeleteHostel(int id)
+        {
+            try
+            {
+                _hostelService.DeleteHostel(id);
+                return Ok($"Hostel with id {id} successfully deleted.");
+            }
+            catch (NotFoundException e)
+            {
+                return NotFound(e.Message);
             }
             catch (Exception e)
             {

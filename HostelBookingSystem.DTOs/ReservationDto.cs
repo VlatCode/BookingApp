@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace HostelBookingSystem.DTOs
 {
-    public class RoomDto
+    public class ReservationDto
     {
-        public int Id { get; set; }
-        public string HostelName { get; set; }
+        public int StartDate { get; set; }
+        public int EndDate { get; set; }
+        public int RoomNumber { get; set; }
     }
 }

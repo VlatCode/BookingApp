@@ -9,18 +9,15 @@ namespace HostelBookingSystem
             new Hostel {
                     Id = 0,
                     Name = "3 Star Hostel",
-                    NumberOfRooms = 3
             },
 
             new Hostel {
                     Id = 1,
                     Name = "4 Star Hostel",
-                    NumberOfRooms = 5
             },
             new Hostel {
                     Id = 2,
                     Name = "5 Star Hostel",
-                    NumberOfRooms = 10
             }
         };
 
@@ -41,15 +38,18 @@ namespace HostelBookingSystem
         {
             new Reservation {
                     Id = 0,
-                    MainGuestId = 0
+                    StartDate = 1,
+                    EndDate = 7
             },
             new Reservation {
                     Id = 1,
-                    MainGuestId = 1
+                    StartDate = 1,
+                    EndDate = 5
             },
             new Reservation {
                     Id = 2,
-                    MainGuestId = 2
+                    StartDate = 6,
+                    EndDate = 10
             },
         };
     }

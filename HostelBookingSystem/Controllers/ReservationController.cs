@@ -1,4 +1,7 @@
-﻿using HostelBookingSystem.Models;
+﻿using HostelBookingSystem.DTOs;
+using HostelBookingSystem.Models;
+using HostelBookingSystem.Services.Implementations;
+using HostelBookingSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -14,10 +17,26 @@ namespace HostelBookingSystem.Controllers
         // cancel a reservation
         // or update a reservation.
 
-        [HttpGet]
-        public ActionResult<List<Reservation>> GetAll()
+        private IReservationService _reservationService;
+
+        // The service is a parameter for the controller
+        // because it's required for the controller to be instantiated
+        public ReservationController(IReservationService reservationService) // Dependency Injection
         {
-            return Ok(StaticDb.Reservations);
+            _reservationService = reservationService;
+        }
+
+        [HttpGet]
+        public ActionResult<List<ReservationDto>> Get()
+        {
+            try
+            {
+                return Ok(_reservationService.GetAllReservations());
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred! Contact the admin!");
+            }
         }
 
         [HttpGet("index")]
@@ -50,10 +69,6 @@ namespace HostelBookingSystem.Controllers
                 if (reservation.Id == null)
                 {
                     return BadRequest("Please enter reservation number.");
-                }
-                if (reservation.MainGuestId == null)
-                {
-                    return BadRequest("Field must not be empty.");
                 }
                 // VALIDATE ROOM AVAILABILITY
                 //if (room.Availability != true)
@@ -101,7 +116,6 @@ namespace HostelBookingSystem.Controllers
 
             // Update
             reservationDb.Id = reservation.Id;
-            reservationDb.MainGuestId = reservation.MainGuestId;
             reservationDb.StartDate = reservation.StartDate;
             reservationDb.EndDate = reservation.EndDate;
 

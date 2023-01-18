@@ -21,7 +21,7 @@ namespace HostelBookingSystem.Controllers
 
         // GET ALL ROOMS
         [HttpGet]
-        public ActionResult<List<RoomDto>> GetAll()
+        public ActionResult<List<RoomDto>> Get()
         {
             try
             {
@@ -54,8 +54,8 @@ namespace HostelBookingSystem.Controllers
 
         // ADD ROOM
         [HttpPost("addRoom")]
-        public IActionResult AddRoom([FromBody] AddRoomDto addRoomDto)
-        {
+        public IActionResult AddRoom([FromBody] AddRoomDto addRoomDto) 
+        { 
             try
             {
                 _roomService.AddRoom(addRoomDto);

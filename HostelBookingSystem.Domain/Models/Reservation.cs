@@ -13,9 +13,7 @@ namespace HostelBookingSystem.Models
         public int Id { get; set; }
         public int StartDate { get; set; }
         public int EndDate { get; set; }
-
         public List<Guest> Guests = new List<Guest>();
-        public int MainGuestId { get; set; }
         public int RoomId { get; set; }
         public Room Room { get; set; }
     }

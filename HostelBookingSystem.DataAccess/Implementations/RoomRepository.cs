@@ -32,19 +32,21 @@ namespace HostelBookingSystem.DataAccess.Implementations
         public List<Room> GetAll()
         {
             return _bookingAppDbContext.Rooms
-                            .ToList();
+                .Include(x => x.Hostel) // displays info about the Hostel
+                .ToList();
         }
 
         public Room GetById(int id)
         {
             return _bookingAppDbContext.Rooms
-                .Include(x => x.Hostel) // include Hostel because of relation
-                .FirstOrDefault(x => x.Id == id);   
+                .Include(x => x.Hostel) // displays info about the Hostel
+                .FirstOrDefault(x => x.Id == id);
         }
 
         public void Update(Room entity)
         {
-            throw new NotImplementedException();
+            _bookingAppDbContext.Rooms.Update(entity);
+            _bookingAppDbContext.SaveChanges();
         }
     }
 }

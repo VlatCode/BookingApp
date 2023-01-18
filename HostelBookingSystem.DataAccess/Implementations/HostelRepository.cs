@@ -1,4 +1,5 @@
 ﻿using HostelBookingSystem.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace HostelBookingSystem.DataAccess.Implementations
         public Hostel GetById(int id)
         {
             return _bookingAppDbContext.Hostels
+                .Include(x => x.Rooms)
                 .FirstOrDefault(x => x.Id == id);
         }
 
@@ -41,7 +43,8 @@ namespace HostelBookingSystem.DataAccess.Implementations
 
         public void Delete(Hostel entity)
         {
-            throw new NotImplementedException();
+            _bookingAppDbContext.Hostels.Remove(entity);
+            _bookingAppDbContext.SaveChanges();
         }
     }
 }

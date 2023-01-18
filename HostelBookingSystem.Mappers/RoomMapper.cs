@@ -15,8 +15,8 @@ namespace HostelBookingSystem.Mappers
             return new RoomDto
             {
                 Id = room.Id,
+                HostelName = room.Hostel.Name,
                 //List <Reservation> Reservations = room.Reservations.ToList(),
-                Hostel = room.Hostel
             };
         }
 
@@ -24,9 +24,10 @@ namespace HostelBookingSystem.Mappers
         {
             return new Room()
             {
-                //Id = addRoomDto.Id,
-                Hostel = addRoomDto.Hostel
+                HostelId = addRoomDto.HostelId, // FK
             };
         }
+
+
     }
 }
