@@ -60,5 +60,15 @@ namespace HostelBookingSystem.Services.Implementations
             // 3. Add to db
             _roomRepository.Add(newRoom);
         }
+
+        public void DeleteRoom(int id)
+        {
+            Room roomDb = _roomRepository.GetById(id);
+            if (roomDb == null)
+            {
+                throw new NotFoundException($"Room with id {id} was not found!");
+            }
+            _roomRepository.Delete(roomDb);
+        }
     }
 }

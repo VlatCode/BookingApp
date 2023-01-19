@@ -70,5 +70,24 @@ namespace HostelBookingSystem.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred! Contact the admin!");
             }
         }
+
+        // DELETE ROOM
+        [HttpDelete("deleteRoom/{id}")]
+        public IActionResult DeleteRoom(int id)
+        {
+            try
+            {
+                _roomService.DeleteRoom(id);
+                return Ok($"Room with id {id} successfully deleted.");
+            }
+            catch (NotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred! Contact the admin!");
+            }
+        }
     }
 }

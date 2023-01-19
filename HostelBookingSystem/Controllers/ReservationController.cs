@@ -99,18 +99,22 @@ namespace HostelBookingSystem.Controllers
         }
 
 
-        //[HttpDelete("id")]
-        //public ActionResult<List<Reservation>> Delete(int id)
-        //{
-        //    var reservation = StaticDb.Reservations.Find(x => x.Id == id);
-        //    if (reservation == null)
-        //    {
-        //        return BadRequest("Reservation not found.");
-        //    }
-        //    StaticDb.Reservations.Remove(reservation);
-        //    return Ok(reservation);
-        //}
-
-        
+        [HttpDelete("deleteReservation/{id}")]
+        public IActionResult DeleteReservation(int id)
+        {
+            try
+            {
+                _reservationService.DeleteReservation(id);
+                return Ok($"Reservation with id {id} successfully deleted.");
+            }
+            catch (NotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred! Contact the admin!");
+            }
+        }
     }
 }

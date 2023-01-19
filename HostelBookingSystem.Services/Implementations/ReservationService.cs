@@ -93,7 +93,13 @@ namespace HostelBookingSystem.Services.Implementations
 
         public void DeleteReservation(int id)
         {
-            throw new NotImplementedException();
+            Reservation reservationDb = _reservationRepository.GetById(id);
+            if (reservationDb == null)
+            {
+                throw new NotFoundException($"Reservation with id {id} was not found.");
+            }
+
+            _reservationRepository.Delete(reservationDb);
         }
     }
 }
