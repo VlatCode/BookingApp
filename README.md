@@ -9,6 +9,8 @@ It includes:
 * Adding a hostel/room/reservation by inputting required parameters
 * Removing hostels/rooms/reservations from the database by ID
 
+Front-end part of the app: https://github.com/VlatCode/BookingApp-FE
+
 ## Getting Started
 ### Installing
 
