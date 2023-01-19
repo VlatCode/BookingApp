@@ -40,8 +40,13 @@ namespace HostelBookingSystem.Services.Implementations
             {
                 throw new NotFoundException($"Reservation with id {id} was not found.");
             }
+            if (id == null)
+            {
+                throw new InvalidEntryException("Hostel ID is required");
+            }
 
             ReservationDto reservationDto = reservationDb.ToReservationDto();
+            //reservationDto.NumberOfGuests = reservationDto.Guests.Count;
             return reservationDto;
         }
 

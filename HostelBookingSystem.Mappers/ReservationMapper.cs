@@ -17,6 +17,7 @@ namespace HostelBookingSystem.Mappers
                 StartDate = reservation.StartDate,
                 EndDate = reservation.EndDate,
                 RoomId = reservation.Room.Id,
+                //NumberOfGuests = reservation.Guests.Count
             };
         }
 

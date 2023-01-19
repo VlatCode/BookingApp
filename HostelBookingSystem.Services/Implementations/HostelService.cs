@@ -34,9 +34,13 @@ namespace HostelBookingSystem.Services.Implementations
         public HostelDto GetById(int id)
         {
             Hostel hostelDb = _hostelRepository.GetById(id);
-            if(hostelDb == null)
+            if (hostelDb == null)
             {
                 throw new NotFoundException($"Hostel with id {id} was not found!");
+            }
+            if (id == null)
+            {
+                throw new InvalidEntryException("Hostel ID is required");
             }
 
             HostelDto hostelDto = hostelDb.ToHostelDto();
@@ -72,7 +76,7 @@ namespace HostelBookingSystem.Services.Implementations
         public void DeleteHostel(int id)
         {
             Hostel hostelDb = _hostelRepository.GetById(id);
-            if(hostelDb == null)
+            if (hostelDb == null)
             {
                 throw new NotFoundException($"Hostel with id {id} was not found!");
             }

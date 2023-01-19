@@ -12,5 +12,6 @@ namespace HostelBookingSystem.DTOs
         public int StartDate { get; set; }
         public int EndDate { get; set; }
         public int RoomId { get; set; }
+        //public int NumberOfGuests { get; set; }
     }
 }
