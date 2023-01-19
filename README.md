@@ -20,6 +20,5 @@ To run the application successfully, you need to:
 * Run the application and test it out on Swagger!
 
 ## Authors
-
-Vlatko Nikolovski
+###Vlatko Nikolovski
 
