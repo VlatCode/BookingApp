@@ -64,7 +64,6 @@ namespace HostelBookingSystem.DataAccess
                 .WithMany(x => x.Reservations)
                 .HasForeignKey(x => x.RoomId);
             
-
             ////////////////////////////
             // Guest
             modelBuilder.Entity<Guest>()

@@ -40,10 +40,7 @@ namespace HostelBookingSystem.Services.Implementations
             }
 
             HostelDto hostelDto = hostelDb.ToHostelDto();
-
             hostelDto.NumberOfRooms = hostelDb.Rooms.Count;
-            Console.WriteLine(hostelDb.Rooms.Count);
-
             return hostelDto;
         }
 

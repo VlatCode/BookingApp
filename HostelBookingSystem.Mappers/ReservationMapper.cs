@@ -16,8 +16,27 @@ namespace HostelBookingSystem.Mappers
             {
                 StartDate = reservation.StartDate,
                 EndDate = reservation.EndDate,
-                RoomNumber = reservation.Room.Id // switch to new column RoomNumber (inside Room table)
+                RoomId = reservation.Room.Id,
             };
+        }
+
+        public static Reservation ToReservation(this AddReservationDto addReservationDto)
+        {
+            return new Reservation()
+            {
+                StartDate = addReservationDto.StartDate,
+                EndDate = addReservationDto.EndDate,
+                RoomId = addReservationDto.RoomId
+            };
+        }
+
+        public static Reservation ToReservation(this UpdateReservationDto updateReservationDto, Reservation reservationDb)
+        {
+            reservationDb.StartDate = updateReservationDto.StartDate;
+            reservationDb.EndDate = updateReservationDto.EndDate;
+            reservationDb.RoomId = updateReservationDto.RoomId;
+
+            return reservationDb;
         }
     }
 }

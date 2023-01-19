@@ -2,6 +2,7 @@
 using HostelBookingSystem.Models;
 using HostelBookingSystem.Services.Implementations;
 using HostelBookingSystem.Services.Interfaces;
+using HostelBookingSystem.Shared.CustomExceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -39,21 +40,17 @@ namespace HostelBookingSystem.Controllers
             }
         }
 
-        [HttpGet("index")]
-        public ActionResult<Reservation> GetByIndex(int index)
+        [HttpGet("{id}")]
+        public ActionResult<ReservationDto> GetById(int id)
         {
             try
             {
-                if (index < 0)
-                {
-                    return BadRequest("The index can not be negative");
-                }
-                if (index >= StaticDb.Reservations.Count)
-                {
-                    return NotFound($"There is no resource on index {index}");
-                }
-
-                return Ok(StaticDb.Reservations[index]);
+                var reservationDto = _reservationService.GetById(id);
+                return Ok(reservationDto);
+            }
+            catch (NotFoundException e)
+            {
+                return NotFound(e.Message);
             }
             catch (Exception e)
             {
@@ -61,65 +58,59 @@ namespace HostelBookingSystem.Controllers
             }
         }
 
-        [HttpPost]
-        public IActionResult Add([FromBody] Reservation reservation)
+        [HttpPost("addReservation")]
+        public IActionResult Add([FromBody] AddReservationDto addReservationDto)
         {
             try
             {
-                if (reservation.Id == null)
-                {
-                    return BadRequest("Please enter reservation number.");
-                }
-                // VALIDATE ROOM AVAILABILITY
-                //if (room.Availability != true)
-                //{
-                //    return BadRequest("This room is not available.");
-                //}
-
-                StaticDb.Reservations.Add(reservation);
-                return StatusCode(StatusCodes.Status201Created, "Reservation was successful.");
+                _reservationService.AddReservation(addReservationDto);
+                return StatusCode(StatusCodes.Status201Created, "Reservation created.");
+            }
+            catch (InvalidEntryException e)
+            {
+                return BadRequest(e.Message);
             }
             catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred! Contact the admin!");
             }
-        }
-
-        [HttpDelete("id")]
-        public ActionResult<List<Reservation>> Delete(int id)
-        {
-            var reservation = StaticDb.Reservations.Find(x => x.Id == id);
-            if (reservation == null)
-            {
-                return BadRequest("Reservation not found.");
-            }
-            StaticDb.Reservations.Remove(reservation);
-            return Ok(reservation);
         }
 
         [HttpPut]
-        public IActionResult Update([FromBody] Reservation reservation, int id)
+        public IActionResult UpdateReservation([FromBody] UpdateReservationDto updateReservationDto)
         {
-            Reservation reservationDb = StaticDb.Reservations.Find(x => x.Id == id);
-            if (reservationDb == null)
+            try
             {
-                return BadRequest("Reservation not found.");
+                _reservationService.UpdateReservation(updateReservationDto);
+                return NoContent(); // 204
             }
-            //if (reservationDb.MainGuestId == null)
-            //{
-            //    return BadRequest("Reservation not found.");
-            //}
-            //if (reservationDb.StartDate == null || reservationDb.EndDate == null)
-            //{
-            //    return BadRequest("Reservation not found.");
-            //}
-
-            // Update
-            reservationDb.Id = reservation.Id;
-            reservationDb.StartDate = reservation.StartDate;
-            reservationDb.EndDate = reservation.EndDate;
-
-            return Ok(reservationDb);
+            catch (NotFoundException e)
+            {
+                return NotFound(e.Message); // 404
+            }
+            catch (InvalidEntryException e)
+            {
+                return BadRequest(e.Message); // 400
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred! Contact the admin!");
+            }
         }
+
+
+        //[HttpDelete("id")]
+        //public ActionResult<List<Reservation>> Delete(int id)
+        //{
+        //    var reservation = StaticDb.Reservations.Find(x => x.Id == id);
+        //    if (reservation == null)
+        //    {
+        //        return BadRequest("Reservation not found.");
+        //    }
+        //    StaticDb.Reservations.Remove(reservation);
+        //    return Ok(reservation);
+        //}
+
+        
     }
 }

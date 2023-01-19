@@ -20,6 +20,7 @@ namespace HostelBookingSystem.DataAccess.Implementations
         public List<Hostel> GetAll()
         {
             return _bookingAppDbContext.Hostels
+                .Include(x => x.Rooms)
                 .ToList();
         }
 

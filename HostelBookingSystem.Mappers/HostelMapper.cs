@@ -15,7 +15,7 @@ namespace HostelBookingSystem.Mappers
             return new HostelDto
             {
                 Name = hostel.Name,
-                NumberOfRooms = hostel.Rooms.Count,
+                NumberOfRooms = hostel.Rooms.Count
             };
         }
 

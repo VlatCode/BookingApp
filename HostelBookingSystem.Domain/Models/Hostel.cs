@@ -8,7 +8,7 @@ namespace HostelBookingSystem.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string? Name { get; set; }
+        public string Name { get; set; }
         public List<Room> Rooms = new List<Room>();
     }
 }

@@ -16,7 +16,7 @@ namespace HostelBookingSystem.HelpersClassLib
             x.UseSqlServer("Server=.\\SQLExpress;Database=BookingAppDb;TrustServerCertificate=True;Trusted_Connection=True"));
         }
 
-        // We need to inject the repositories
+        // Injecting the repositories
         public static void InjectRepositories(IServiceCollection services)
         {
             // .AddTransient does the following:

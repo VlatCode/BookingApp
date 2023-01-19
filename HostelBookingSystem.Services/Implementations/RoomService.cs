@@ -32,7 +32,6 @@ namespace HostelBookingSystem.Services.Implementations
         {
             var roomsDb = _roomRepository.GetAll();
             // .ToRoomDto() comes from the RoomMapper
-            // We can use LINQ on it because it's an extension method in the RoomMapper
             return roomsDb.Select(x => x.ToRoomDto()).ToList();
         }
 
@@ -49,7 +48,7 @@ namespace HostelBookingSystem.Services.Implementations
 
         public void AddRoom(AddRoomDto room)
         {
-            // 1. Validate the data that we receive
+            // 1. Validation
             Hostel hostelDb = _hostelRepository.GetById(room.HostelId);
             if (hostelDb == null)
             {

@@ -8,7 +8,7 @@ namespace HostelBookingSystem.DTOs
 {
     public class HostelDto
     {
-        public string? Name { get; set; }
+        public string Name { get; set; }
         public int NumberOfRooms { get; set; }
     }
 }

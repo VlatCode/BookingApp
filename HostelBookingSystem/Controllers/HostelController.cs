@@ -72,7 +72,7 @@ namespace HostelBookingSystem.Controllers
             }
         }
 
-        [HttpDelete("deleteHostel")]
+        [HttpDelete("deleteHostel/{id}")]
         public IActionResult DeleteHostel(int id)
         {
             try
