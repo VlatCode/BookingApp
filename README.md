@@ -2,7 +2,7 @@
 
 ## Description
 
-This repository is the backend of a simple booking application with a few booking features.
+This repository is the back-end of a simple booking application with a few booking features.
 It includes:
 * Displaying all hostels in the app, all rooms in each hostel & all reservations for each room
 * Displaying each hostel, room & reservation by its unique database ID (SQL), and displaying some information about each
