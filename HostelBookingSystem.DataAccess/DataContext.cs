@@ -1,4 +1,5 @@
-﻿using HostelBookingSystem.Models;
+﻿using HostelBookingSystem.Domain.Models;
+using HostelBookingSystem.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace HostelBookingSystem.DataAccess
 
         }
 
+        public DbSet<User> Users { get; set; }
         public DbSet<Hostel> Hostels { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
@@ -24,8 +26,39 @@ namespace HostelBookingSystem.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             ////////////////////////////
-            // Hostel
+            ///// USER
+            modelBuilder.Entity<User>()
+                .Property(x => x.Id)
+                .IsRequired();
+            modelBuilder.Entity<User>()
+                .Property(x => x.FirstName)
+                .IsRequired();
+            modelBuilder.Entity<User>()
+                .Property(x => x.LastName)
+                .IsRequired();
+            modelBuilder.Entity<User>()
+                .Property(x => x.DateOfBirth)
+                .IsRequired();
+            modelBuilder.Entity<User>()
+                .Property(x => x.EmailAddress)
+                .IsRequired();
+            modelBuilder.Entity<User>()
+                .Property(x => x.Username)
+                .IsRequired();
+            modelBuilder.Entity<User>()
+                .Property(x => x.PasswordHash)
+                .IsRequired();
+            modelBuilder.Entity<User>()
+                .Property(x => x.PasswordSalt)
+                .IsRequired();
+            modelBuilder.Entity<User>()
+                .HasMany(x => x.Reservations)
+                .WithOne(x => x.User);
+
+            ////////////////////////////
+            // HOSTEL
             modelBuilder.Entity<Hostel>()
                 .Property(x => x.Id)
                 .IsRequired();
@@ -37,7 +70,7 @@ namespace HostelBookingSystem.DataAccess
                 .WithOne(x => x.Hostel);
 
             ////////////////////////////
-            // Room
+            // ROOM
             modelBuilder.Entity<Room>()
                 .Property(x => x.Id)
                 .IsRequired();
@@ -48,7 +81,7 @@ namespace HostelBookingSystem.DataAccess
                 .HasForeignKey(x => x.HostelId);
 
             ////////////////////////////
-            // Reservation
+            // RESERVATION
             modelBuilder.Entity<Reservation>()
                 .Property(x => x.Id)
                 .IsRequired();
@@ -63,9 +96,13 @@ namespace HostelBookingSystem.DataAccess
                 .HasOne(x => x.Room)
                 .WithMany(x => x.Reservations)
                 .HasForeignKey(x => x.RoomId);
-            
+            modelBuilder.Entity<Reservation>()
+                .HasOne(x => x.User)
+                .WithMany(x => x.Reservations)
+                .HasForeignKey(x => x.UserId);
+
             ////////////////////////////
-            // Guest
+            // GUEST
             modelBuilder.Entity<Guest>()
                 .Property(x => x.Id)
                 .IsRequired();

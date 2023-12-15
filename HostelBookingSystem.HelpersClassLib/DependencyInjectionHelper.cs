@@ -1,5 +1,7 @@
 ﻿using HostelBookingSystem.DataAccess;
 using HostelBookingSystem.DataAccess.Implementations;
+using HostelBookingSystem.DataAccess.Interfaces;
+using HostelBookingSystem.Domain.Models;
 using HostelBookingSystem.Models;
 using HostelBookingSystem.Services.Implementations;
 using HostelBookingSystem.Services.Interfaces;
@@ -13,7 +15,7 @@ namespace HostelBookingSystem.HelpersClassLib
         public static void InjectDbContext(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(x =>
-            x.UseSqlServer("Server=.\\SQLExpress;Database=BookingAppDb;TrustServerCertificate=True;Trusted_Connection=True"));
+            x.UseSqlServer("Server=.\\SQLExpress;Database=BookingApp;TrustServerCertificate=True;Trusted_Connection=True"));
         }
 
         // Injecting the repositories
@@ -22,6 +24,7 @@ namespace HostelBookingSystem.HelpersClassLib
             // .AddTransient does the following:
             // When the app needs to use the methods in the generic interface IRepository,
             // it will receive the appropriate implementation for each class
+            services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IRepository<Hostel>, HostelRepository>();
             services.AddTransient<IRepository<Reservation>, ReservationRepository>();
             services.AddTransient<IRepository<Room>, RoomRepository>();
@@ -30,6 +33,7 @@ namespace HostelBookingSystem.HelpersClassLib
         // Injecting the services
         public static void InjectServices(IServiceCollection services)
         {
+            services.AddTransient<IUserService, UserService>();
             services.AddTransient<IHostelService, HostelService>();
             services.AddTransient<IRoomService, RoomService>();
             services.AddTransient<IReservationService, ReservationService>();

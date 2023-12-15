@@ -12,7 +12,7 @@ namespace HostelBookingSystem.DataAccess.Implementations
     {
         private DataContext _bookingAppDbContext;
 
-        public HostelRepository(DataContext bookingAppDbContext)
+        public HostelRepository (DataContext bookingAppDbContext)
         {
             _bookingAppDbContext = bookingAppDbContext;
         }

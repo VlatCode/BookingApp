@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using HostelBookingSystem.Domain.Models;
 
 namespace HostelBookingSystem.Models
 {
@@ -16,5 +17,7 @@ namespace HostelBookingSystem.Models
         public List<Guest> Guests = new List<Guest>();
         public Room Room { get; set; }
         public int RoomId { get; set; }
+        public User User { get; set; }
+        public int UserId { get; set; }
     }
 }
