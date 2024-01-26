@@ -75,7 +75,6 @@ namespace HostelBookingSystem.Controllers
                 return BadRequest("User not found.");
             }
 
-            // Hash the input password and compare with the stored hashed password
             byte[] providedPasswordHash;
             byte[] providedPasswordSalt;
             CreatePasswordHash(loginInfo.Password, out providedPasswordHash, out providedPasswordSalt);
@@ -88,6 +87,23 @@ namespace HostelBookingSystem.Controllers
             string token = CreateToken(matchedUser);
 
             return Ok(token);
+        }
+
+        private HashSet<string> invalidatedTokens = new HashSet<string>();
+
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            string token = GetTokenFromHeaders();
+
+            if (string.IsNullOrEmpty(token))
+            {
+                return BadRequest("Token not provided.");
+            }
+
+            InvalidateToken(token);
+
+            return Ok("Logout successful.");
         }
 
         private string CreateToken(UserDto user)
@@ -112,6 +128,32 @@ namespace HostelBookingSystem.Controllers
 
             // Return the token as a JSON object
             return $"{{\"token\":\"{jwt}\"}}";
+        }
+
+        private string GetTokenFromHeaders()
+        {
+            var authorizationHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
+
+            if (authorizationHeader != null)
+            {
+                if (authorizationHeader.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
+                {
+                    return authorizationHeader.Substring("Bearer ".Length).Trim();
+                }
+            }
+
+            return null;
+        }
+
+        private void InvalidateToken(string token)
+        {
+            invalidatedTokens.Add(token);
+        }
+
+        // Method can be used later to check if a token is in the set or whether the token is considered invalidate
+        private bool IsTokenInvalid(string token)
+        {
+            return invalidatedTokens.Contains(token);
         }
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
