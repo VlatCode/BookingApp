@@ -37,6 +37,11 @@ namespace HostelBookingSystem.Services.Implementations
 
         public RoomDto GetById(int id)
         {
+            if (id <= 0)
+            {
+                throw new InvalidEntryException("Hostel ID must be a positive integer.");
+            }
+
             Room roomDb = _roomRepository.GetById(id);
             if (roomDb == null)
             {
@@ -54,6 +59,11 @@ namespace HostelBookingSystem.Services.Implementations
         public void AddRoom(AddRoomDto room)
         {
             // 1. Validation
+            if (room.HostelId <= 0)
+            {
+                throw new InvalidEntryException("HostelId must be a positive integer.");
+            }
+
             Hostel hostelDb = _hostelRepository.GetById(room.HostelId);
             if (hostelDb == null)
             {
@@ -68,6 +78,11 @@ namespace HostelBookingSystem.Services.Implementations
 
         public void DeleteRoom(int id)
         {
+            if (id <= 0)
+            {
+                throw new InvalidEntryException("Room ID must be a positive integer.");
+            }
+
             Room roomDb = _roomRepository.GetById(id);
             if (roomDb == null)
             {

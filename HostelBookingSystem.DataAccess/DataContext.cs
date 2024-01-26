@@ -21,7 +21,6 @@ namespace HostelBookingSystem.DataAccess
         public DbSet<Hostel> Hostels { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
-        public DbSet<Guest> Guests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -100,20 +99,6 @@ namespace HostelBookingSystem.DataAccess
                 .HasOne(x => x.User)
                 .WithMany(x => x.Reservations)
                 .HasForeignKey(x => x.UserId);
-
-            ////////////////////////////
-            // GUEST
-            modelBuilder.Entity<Guest>()
-                .Property(x => x.Id)
-                .IsRequired();
-            modelBuilder.Entity<Guest>()
-                .Property(x => x.Name)
-                .IsRequired();
-            // Relation
-            modelBuilder.Entity<Guest>()
-                .HasOne(x => x.Reservation)
-                .WithMany(x => x.Guests)
-                .HasForeignKey(x => x.ReservationId);
         }
     }
 }

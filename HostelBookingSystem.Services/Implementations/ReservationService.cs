@@ -35,14 +35,15 @@ namespace HostelBookingSystem.Services.Implementations
 
         public ReservationDto GetById(int id)
         {
+            if (id <= 0)
+            {
+                throw new InvalidEntryException("Reservation ID must be a positive integer.");
+            }
+
             Reservation reservationDb = _reservationRepository.GetById(id);
             if (reservationDb == null)
             {
                 throw new NotFoundException($"Reservation with id {id} was not found.");
-            }
-            if (id == null)
-            {
-                throw new InvalidEntryException("Hostel ID is required");
             }
 
             ReservationDto reservationDto = reservationDb.ToReservationDto();
@@ -53,12 +54,16 @@ namespace HostelBookingSystem.Services.Implementations
         public void AddReservation(AddReservationDto reservation)
         {
             // 1. Validation
+            if (reservation.RoomId <= 0)
+            {
+                throw new InvalidEntryException("Room ID must be a positive integer.");
+            }
             Room roomDb = _roomRepository.GetById(reservation.RoomId);
             if (roomDb == null)
             {
                 throw new NotFoundException($"Room with id {reservation.RoomId} was not found!");
             }
-            if (reservation.StartDate == null || reservation.EndDate == null)
+            if (reservation.StartDate <= 0 || reservation.EndDate <= 0)
             {
                 throw new InvalidEntryException($"Please select booking dates!");
             }
@@ -77,6 +82,10 @@ namespace HostelBookingSystem.Services.Implementations
             {
                 throw new NotFoundException($"Reservation with id {reservation.Id} was not found!");
             }
+            if (reservation.RoomId <= 0)
+            {
+                throw new InvalidEntryException("Hostel ID must be a positive integer.");
+            }
 
             Room roomDb = _roomRepository.GetById(reservation.RoomId);
             if (roomDb == null)
@@ -84,7 +93,7 @@ namespace HostelBookingSystem.Services.Implementations
                 throw new InvalidEntryException($"Room id {reservation.RoomId} does not exist! Try again.");
             }
 
-            if (reservation.StartDate == null || reservation.EndDate == null)
+            if (reservation.StartDate <= 0 || reservation.EndDate <= 0)
             {
                 throw new NotFoundException($"Please enter start and end dates!");
             }
@@ -98,6 +107,11 @@ namespace HostelBookingSystem.Services.Implementations
 
         public void DeleteReservation(int id)
         {
+            if (id <= 0)
+            {
+                throw new InvalidEntryException("Reservation ID must be a positive integer.");
+            }
+
             Reservation reservationDb = _reservationRepository.GetById(id);
             if (reservationDb == null)
             {

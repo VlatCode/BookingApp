@@ -33,6 +33,11 @@ namespace HostelBookingSystem.Services.Implementations
 
         public HostelDto GetById(int id)
         {
+            if (id <= 0)
+            {
+                throw new InvalidEntryException("Hostel ID must be a positive integer.");
+            }
+
             Hostel hostelDb = _hostelRepository.GetById(id);
             if (hostelDb == null)
             {
@@ -59,6 +64,14 @@ namespace HostelBookingSystem.Services.Implementations
             {
                 throw new InvalidEntryException("Invalid entry. Try again.");
             }
+            if (_hostelRepository.GetAll().Any(h => h.Name == addHostelDto.Name))
+            {
+                throw new InvalidEntryException("Hostel with the same name already exists.");
+            }
+            if (addHostelDto.NumberOfRooms <= 0)
+            {
+                throw new InvalidEntryException("Number of rooms must be a positive integer.");
+            }
             // 2. Map to domain model
             Hostel newHostel = addHostelDto.ToHostel();
             List<Room> rooms = new List<Room>();
@@ -75,6 +88,11 @@ namespace HostelBookingSystem.Services.Implementations
 
         public void DeleteHostel(int id)
         {
+            if (id <= 0)
+            {
+                throw new InvalidEntryException("Hostel ID must be a positive integer.");
+            }
+
             Hostel hostelDb = _hostelRepository.GetById(id);
             if (hostelDb == null)
             {
