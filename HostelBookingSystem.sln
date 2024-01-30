@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
@@ -11,13 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HostelBookingSystem.DataAcc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HostelBookingSystem.HelpersClassLib", "HostelBookingSystem.HelpersClassLib\HostelBookingSystem.HelpersClassLib.csproj", "{523A6F2A-93A2-4397-A27F-C92A8E398604}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostelBookingSystem.DTOs", "HostelBookingSystem.DTOs\HostelBookingSystem.DTOs.csproj", "{A23EDE3B-37CE-4612-B3B3-CA3DD3552831}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HostelBookingSystem.DTOs", "HostelBookingSystem.DTOs\HostelBookingSystem.DTOs.csproj", "{A23EDE3B-37CE-4612-B3B3-CA3DD3552831}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostelBookingSystem.Mappers", "HostelBookingSystem.Mappers\HostelBookingSystem.Mappers.csproj", "{EF0ED38A-1FDA-4CE1-B06D-24D4ECD22E8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HostelBookingSystem.Mappers", "HostelBookingSystem.Mappers\HostelBookingSystem.Mappers.csproj", "{EF0ED38A-1FDA-4CE1-B06D-24D4ECD22E8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostelBookingSystem.Services", "HostelBookingSystem.Services\HostelBookingSystem.Services.csproj", "{82E7F9D1-2148-4960-8167-B7758B1D9BE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HostelBookingSystem.Services", "HostelBookingSystem.Services\HostelBookingSystem.Services.csproj", "{82E7F9D1-2148-4960-8167-B7758B1D9BE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostelBookingSystem.Shared", "HostelBookingSystem.Shared\HostelBookingSystem.Shared.csproj", "{3B7776BE-23DC-4EA0-800B-BEDED725E89A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HostelBookingSystem.Shared", "HostelBookingSystem.Shared\HostelBookingSystem.Shared.csproj", "{3B7776BE-23DC-4EA0-800B-BEDED725E89A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
