@@ -1,4 +1,4 @@
-﻿using HostelBookingSystem.DTOs;
+﻿using HostelBookingSystem.DTOs.Reservation;
 using HostelBookingSystem.Models;
 using HostelBookingSystem.Services.Implementations;
 using HostelBookingSystem.Services.Interfaces;

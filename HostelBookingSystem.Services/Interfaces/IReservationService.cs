@@ -1,4 +1,4 @@
-﻿using HostelBookingSystem.DTOs;
+﻿using HostelBookingSystem.DTOs.Reservation;
 using System;
 using System.Collections.Generic;
 using System.Linq;

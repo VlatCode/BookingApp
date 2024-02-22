@@ -41,25 +41,6 @@ DependencyInjectionHelper.InjectDbContext(builder.Services);
 DependencyInjectionHelper.InjectRepositories(builder.Services);
 DependencyInjectionHelper.InjectServices(builder.Services);
 
-// DONT DELETE COMMENTED CODE
-//var app = builder.Build();
-
-//// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
-
-//app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
-
-//app.UseAuthorization();
-
-//app.MapControllers();
-
-//app.Run();
-// DONT DELETE COMMENTED CODE
-
 builder.Services.AddAuthentication(x =>
 {
     //we will use JWT authentication

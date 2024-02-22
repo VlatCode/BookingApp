@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HostelBookingSystem.DTOs
+namespace HostelBookingSystem.DTOs.Room
 {
-    public class RoomDto
+    public class AddRoomDto
     {
-        public int Id { get; set; }
-        public string HostelName { get; set; }
+        public int HostelId { get; set; }
     }
 }

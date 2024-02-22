@@ -1,6 +1,6 @@
 ﻿using HostelBookingSystem.DataAccess;
 using HostelBookingSystem.DataAccess.Implementations;
-using HostelBookingSystem.DTOs;
+using HostelBookingSystem.DTOs.Room;
 using HostelBookingSystem.Mappers;
 using HostelBookingSystem.Models;
 using HostelBookingSystem.Services.Interfaces;

@@ -1,4 +1,4 @@
-﻿using HostelBookingSystem.DTOs;
+﻿using HostelBookingSystem.DTOs.Reservation;
 using HostelBookingSystem.Models;
 using System;
 using System.Collections.Generic;

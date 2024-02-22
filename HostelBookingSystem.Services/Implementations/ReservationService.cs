@@ -1,6 +1,5 @@
 ﻿using HostelBookingSystem.DataAccess.Implementations;
 using HostelBookingSystem.DataAccess;
-using HostelBookingSystem.DTOs;
 using HostelBookingSystem.Models;
 using HostelBookingSystem.Services.Interfaces;
 using System;
@@ -10,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HostelBookingSystem.Mappers;
 using HostelBookingSystem.Shared.CustomExceptions;
+using HostelBookingSystem.DTOs.Reservation;
 
 namespace HostelBookingSystem.Services.Implementations
 {
