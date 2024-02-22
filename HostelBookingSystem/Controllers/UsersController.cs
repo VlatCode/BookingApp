@@ -4,6 +4,7 @@ using HostelBookingSystem.Services.Implementations;
 using HostelBookingSystem.Shared.CustomExceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using HostelBookingSystem.DTOs;
 
 namespace HostelBookingSystem.Controllers
 {
@@ -16,6 +17,19 @@ namespace HostelBookingSystem.Controllers
         public UsersController(IUsersService usersService)
         {
             _usersService = usersService;
+        }
+
+        [HttpGet]
+        public ActionResult<List<UserDto>> GetAll()
+        {
+            try
+            {
+                return Ok(_usersService.GetAllUsers());
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred! Contact the admin!");
+            }
         }
 
         [AllowAnonymous]

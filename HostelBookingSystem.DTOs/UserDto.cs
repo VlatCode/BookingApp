@@ -13,7 +13,5 @@ namespace HostelBookingSystem.DTOs
         public DateTime DateOfBirth { get; set; }
         public string EmailAddress { get; set; }
         public string Username { get; set; }
-        public byte[] PasswordHash { get; set; }
-        public byte[] PasswordSalt { get; set; }
     }
 }
