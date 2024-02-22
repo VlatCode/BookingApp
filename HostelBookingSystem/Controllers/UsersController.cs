@@ -4,7 +4,6 @@ using HostelBookingSystem.Services.Implementations;
 using HostelBookingSystem.Shared.CustomExceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using HostelBookingSystem.DTOs;
 
 namespace HostelBookingSystem.Controllers
 {
