@@ -1,12 +1,6 @@
 ﻿using HostelBookingSystem.DataAccess.Interfaces;
 using HostelBookingSystem.Domain.Models;
-using HostelBookingSystem.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HostelBookingSystem.DataAccess.Implementations
 {

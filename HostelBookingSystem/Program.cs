@@ -1,38 +1,95 @@
-using HostelBookingSystem.DataAccess;
+using FluentAssertions.Common;
 using HostelBookingSystem.HelpersClassLib;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Configuration;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
+
+builder.Services.AddLogging(loggingBuilder =>
+{
+    loggingBuilder.AddConsole(); // Log to the console
+    loggingBuilder.AddDebug();   // Log debug messages
+});
+
+// Read from appSettings.json, find the property AppSettings from the main object
+var appSettings = builder.Configuration.GetSection("AppSettings");
+builder.Services.Configure<AppSettings>(appSettings);
+AppSettings appSettingsObject = appSettings.Get<AppSettings>();
+
 // DEPENDENCY INJECTION
-// First we inject the DbContext from the DepdendencyInjectionHelper class
 DependencyInjectionHelper.InjectDbContext(builder.Services);
-// Here we make our program aware of our repositories
 DependencyInjectionHelper.InjectRepositories(builder.Services);
-// Calling our injected services
 DependencyInjectionHelper.InjectServices(builder.Services);
 
+// DONT DELETE COMMENTED CODE
+//var app = builder.Build();
+
+//// Configure the HTTP request pipeline.
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+
+//app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+
+//app.UseAuthorization();
+
+//app.MapControllers();
+
+//app.Run();
+// DONT DELETE COMMENTED CODE
+
+builder.Services.AddAuthentication(x =>
+{
+    //we will use JWT authentication
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(options =>
+    {
+        options.RequireHttpsMetadata = false;
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateAudience = false,
+            ValidateIssuer = false,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(appSettingsObject.SecretKey)),
+        };
+    });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+app.UseCors("AllowAllOrigins");
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
