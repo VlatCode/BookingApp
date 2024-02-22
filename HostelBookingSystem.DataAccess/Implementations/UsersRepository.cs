@@ -1,5 +1,6 @@
 ﻿using HostelBookingSystem.DataAccess.Interfaces;
 using HostelBookingSystem.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Text;
 
 namespace HostelBookingSystem.DataAccess.Implementations
@@ -29,7 +30,9 @@ namespace HostelBookingSystem.DataAccess.Implementations
 
         public List<User> GetAll()
         {
-            return _bookingAppDbContext.Users.ToList();
+            return _bookingAppDbContext.Users
+                //.Include(x => x.Reservations)
+                .ToList();
         }
 
         public User GetById(int id)

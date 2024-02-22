@@ -1,5 +1,6 @@
 ﻿using HostelBookingSystem.DataAccess.Interfaces;
 using HostelBookingSystem.Domain.Models;
+using HostelBookingSystem.DTOs;
 using HostelBookingSystem.DTOs.User;
 using HostelBookingSystem.Mappers;
 using HostelBookingSystem.Services.Interfaces;
@@ -18,15 +19,34 @@ namespace HostelBookingSystem.Services.Implementations
     public class UsersService : IUsersService
     {
         private IUsersRepository _usersRepository;
-        private readonly IConfiguration _config; 
+        private readonly IConfiguration _configuration; 
         private readonly ILogger<UsersService> _logger;
 
-
-        public UsersService(IUsersRepository usersRepository, IConfiguration config, ILogger<UsersService> logger)
+        public UsersService(IUsersRepository usersRepository, IConfiguration configuration, ILogger<UsersService> logger)
         {
             _usersRepository = usersRepository;
-            _config = config;
+            _configuration = configuration;
             _logger = logger;
+        }
+
+        public List<User> GetAllUsers()
+        {
+            return _usersRepository.GetAll();
+        }
+
+        public User GetUserById(int id)
+        {
+            var user = _usersRepository.GetById(id);
+            if (user == null)
+            {
+                throw new UserNotFoundException($"User with id {id} does not exist!");
+            }
+            return user;
+        }
+
+        public void DeleteUser(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public LoggedUserDataDto LoginUser(LoginUserDto loginDto)
@@ -94,7 +114,7 @@ namespace HostelBookingSystem.Services.Implementations
         public string GetJWT(User user)
         {
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-            byte[] secretKeyBytes = Encoding.ASCII.GetBytes(_config["AppSettings:SecretKey"]);
+            byte[] secretKeyBytes = Encoding.ASCII.GetBytes(_configuration["AppSettings:SecretKey"]);
 
             SecurityTokenDescriptor securityTokenDescriptor = new SecurityTokenDescriptor
             {
@@ -163,27 +183,12 @@ namespace HostelBookingSystem.Services.Implementations
 
         public byte[] GenerateSalt()
         {
-            byte[] salt = new byte[16]; // You can adjust the size of the salt as needed
+            byte[] salt = new byte[16]; // Adjust the size of the salt as needed
             using (var rng = new RNGCryptoServiceProvider())
             {
                 rng.GetBytes(salt);
             }
             return salt;
-        }
-
-        public List<User> GetAllUsers()
-        {
-            return _usersRepository.GetAll();
-        }
-
-        public User GetUserById(int id)
-        {
-            var user = _usersRepository.GetById(id);
-            if (user == null)
-            {
-                throw new UserNotFoundException($"User with id {id} does not exist!");
-            }
-            return user;
         }
     }
 }

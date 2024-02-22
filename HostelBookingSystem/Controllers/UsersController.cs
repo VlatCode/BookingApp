@@ -18,6 +18,19 @@ namespace HostelBookingSystem.Controllers
             _usersService = usersService;
         }
 
+        [HttpGet]
+        public ActionResult<List<UserDto>> GetAll()
+        {
+            try
+            {
+                return Ok(_usersService.GetAllUsers());
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred! Contact the admin!");
+            }
+        }
+
         [AllowAnonymous]
         [HttpPost("register")]
         public ActionResult<LoggedUserDataDto> Register([FromBody] RegisterUserDto registerUserDto)
