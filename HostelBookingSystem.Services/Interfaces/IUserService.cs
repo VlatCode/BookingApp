@@ -3,7 +3,7 @@ using HostelBookingSystem.DTOs.User;
 
 namespace HostelBookingSystem.Services.Interfaces
 {
-    public interface IUsersService
+    public interface IUserService
     {
         List<User> GetAllUsers();
         LoggedUserDataDto RegisterUser(RegisterUserDto registerUserDto);

@@ -16,27 +16,27 @@ using XSystem.Security.Cryptography;
 
 namespace HostelBookingSystem.Services.Implementations
 {
-    public class UsersService : IUsersService
+    public class UserService : IUserService
     {
-        private IUsersRepository _usersRepository;
+        private IUserRepository _userRepository;
         private readonly IConfiguration _configuration; 
-        private readonly ILogger<UsersService> _logger;
+        private readonly ILogger<UserService> _logger;
 
-        public UsersService(IUsersRepository usersRepository, IConfiguration configuration, ILogger<UsersService> logger)
+        public UserService(IUserRepository userRepository, IConfiguration configuration, ILogger<UserService> logger)
         {
-            _usersRepository = usersRepository;
+            _userRepository = userRepository;
             _configuration = configuration;
             _logger = logger;
         }
 
         public List<User> GetAllUsers()
         {
-            return _usersRepository.GetAll();
+            return _userRepository.GetAll();
         }
 
         public User GetUserById(int id)
         {
-            var user = _usersRepository.GetById(id);
+            var user = _userRepository.GetById(id);
             if (user == null)
             {
                 throw new UserNotFoundException($"User with id {id} does not exist!");
@@ -56,7 +56,7 @@ namespace HostelBookingSystem.Services.Implementations
                 throw new UserDataException("Username and password are required fields!");
             }
 
-            User userDb = _usersRepository.GetUserByUsername(loginDto.Username);
+            User userDb = _userRepository.GetUserByUsername(loginDto.Username);
 
             if (userDb == null)
             {
@@ -91,9 +91,9 @@ namespace HostelBookingSystem.Services.Implementations
 
                 var user = registerUserDto.ToRegisteredUser(hashedPassword, salt);
 
-                _usersRepository.Add(user);
+                _userRepository.Add(user);
 
-                var userDb = _usersRepository.GetUserByUsername(registerUserDto.Username);
+                var userDb = _userRepository.GetUserByUsername(registerUserDto.Username);
 
                 if (userDb == null)
                 {
@@ -163,7 +163,7 @@ namespace HostelBookingSystem.Services.Implementations
                 throw new UserDataException("Passwords must match!");
             }
 
-            var userDb = _usersRepository.GetUserByUsername(registerUserDto.Username);
+            var userDb = _userRepository.GetUserByUsername(registerUserDto.Username);
 
             if (userDb != null)
             {

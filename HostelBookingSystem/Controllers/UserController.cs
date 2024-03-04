@@ -9,13 +9,13 @@ namespace HostelBookingSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UserController : ControllerBase
     {
-        private IUsersService _usersService;
+        private IUserService _userService;
 
-        public UsersController(IUsersService usersService)
+        public UserController(IUserService userService)
         {
-            _usersService = usersService;
+            _userService = userService;
         }
 
         [HttpGet]
@@ -23,7 +23,7 @@ namespace HostelBookingSystem.Controllers
         {
             try
             {
-                return Ok(_usersService.GetAllUsers());
+                return Ok(_userService.GetAllUsers());
             }
             catch (Exception e)
             {
@@ -37,7 +37,7 @@ namespace HostelBookingSystem.Controllers
         {
             try
             {
-                var userDto = _usersService.RegisterUser(registerUserDto);
+                var userDto = _userService.RegisterUser(registerUserDto);
 
                 return StatusCode(StatusCodes.Status201Created, userDto);
             }
@@ -57,7 +57,7 @@ namespace HostelBookingSystem.Controllers
         {
             try
             {
-                var userDto = _usersService.LoginUser(loginDto);
+                var userDto = _userService.LoginUser(loginDto);
                 return Ok(userDto);
             }
             catch (UserDataException e)

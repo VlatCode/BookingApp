@@ -5,11 +5,11 @@ using System.Text;
 
 namespace HostelBookingSystem.DataAccess.Implementations
 {
-    public class UsersRepository : IUsersRepository
+    public class UserRepository : IUserRepository
     {
         private DataContext _bookingAppDbContext;
 
-        public UsersRepository(DataContext bookingAppDbContext)
+        public UserRepository(DataContext bookingAppDbContext)
         {
             _bookingAppDbContext = bookingAppDbContext;
         }
