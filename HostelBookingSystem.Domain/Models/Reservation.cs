@@ -17,8 +17,8 @@ namespace HostelBookingSystem.Models
         public Room Room { get; set; }
         public int RoomId { get; set; }
         public User User { get; set; }
-        [ForeignKey("User")]
         public int UserId { get; set; }
-        // public int NumberOfGuests { get; set; } - implement property
+        public string? UserName { get; set; }
+        public int NumberOfGuests { get; set; }
     }
 }

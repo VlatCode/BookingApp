@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using HostelBookingSystem.Mappers;
 using HostelBookingSystem.Shared.CustomExceptions;
 using HostelBookingSystem.DTOs.Reservation;
+using HostelBookingSystem.Domain.Models;
 
 namespace HostelBookingSystem.Services.Implementations
 {
@@ -17,15 +18,21 @@ namespace HostelBookingSystem.Services.Implementations
     {
         private IRepository<Reservation> _reservationRepository;
         private IRepository<Room> _roomRepository;
+        private DataAccess.Interfaces.IRepository<User> _userRepository;
 
 
 
         // At first, we need to make an instance of the repository
         // because it needs to be a given parameter for the service
-        public ReservationService(IRepository<Reservation> reservationRepository, IRepository<Room> roomRepository)
+        public ReservationService(
+            IRepository<Reservation> reservationRepository, 
+            IRepository<Room> roomRepository,
+            DataAccess.Interfaces.IRepository<User> userRepository
+            )
         {
             _reservationRepository = reservationRepository;
             _roomRepository = roomRepository;
+            _userRepository = userRepository;
         }
         public List<ReservationDto> GetAllReservations()
         {
@@ -67,9 +74,20 @@ namespace HostelBookingSystem.Services.Implementations
             {
                 throw new InvalidEntryException($"Please select booking dates!");
             }
+            User userDb = _userRepository.GetById(reservation.UserId);
+            if (userDb == null)
+            {
+                throw new NotFoundException($"User with id {reservation.UserId} was not found!");
+            }
             // 2. Map to domain model
             Reservation newReservation = reservation.ToReservation();
             newReservation.Room = roomDb;
+            newReservation.User = userDb;
+            if (!string.IsNullOrEmpty(reservation.UserName))
+            {
+                newReservation.UserName = reservation.UserName;
+            }
+            newReservation.NumberOfGuests = reservation.NumberOfGuests;
             // 3. Add to db
             _reservationRepository.Add(newReservation);
         }
@@ -97,11 +115,21 @@ namespace HostelBookingSystem.Services.Implementations
             {
                 throw new NotFoundException($"Please enter start and end dates!");
             }
+            User userDb = _userRepository.GetById(reservation.UserId);
+            if (userDb == null)
+            {
+                throw new NotFoundException($"User with id {reservation.UserId} was not found!");
+            }
             // 2. Update
             reservationDb.StartDate = reservation.StartDate;
             reservationDb.EndDate = reservation.EndDate;
             reservationDb.RoomId = reservation.RoomId;
-
+            reservationDb.UserId = reservation.UserId;
+            if (!string.IsNullOrEmpty(reservation.UserName))
+            {
+                reservationDb.UserName = reservation.UserName;
+            }
+            reservationDb.NumberOfGuests = reservation.NumberOfGuests;
             _reservationRepository.Update(reservationDb);
         }
 

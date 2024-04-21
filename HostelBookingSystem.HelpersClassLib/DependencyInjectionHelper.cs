@@ -1,6 +1,7 @@
 ﻿using HostelBookingSystem.DataAccess;
 using HostelBookingSystem.DataAccess.Implementations;
 using HostelBookingSystem.DataAccess.Interfaces;
+using HostelBookingSystem.Domain.Models;
 using HostelBookingSystem.Models;
 using HostelBookingSystem.Services.Implementations;
 using HostelBookingSystem.Services.Interfaces;
@@ -24,6 +25,7 @@ namespace HostelBookingSystem.HelpersClassLib
             // When the app needs to use the methods in the generic interface IRepository,
             // it will receive the appropriate implementation for each class
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<DataAccess.Interfaces.IRepository<User>, UserRepository>();
             services.AddTransient<DataAccess.IRepository<Hostel>, HostelRepository>();
             services.AddTransient<DataAccess.IRepository<Reservation>, ReservationRepository>();
             services.AddTransient<DataAccess.IRepository<Room>, RoomRepository>();

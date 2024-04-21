@@ -1,4 +1,5 @@
-﻿using HostelBookingSystem.DTOs.Reservation;
+﻿using HostelBookingSystem.Domain.Models;
+using HostelBookingSystem.DTOs.Reservation;
 using HostelBookingSystem.Models;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,9 @@ namespace HostelBookingSystem.Mappers
                 StartDate = reservation.StartDate,
                 EndDate = reservation.EndDate,
                 RoomId = reservation.Room.Id,
-                //NumberOfGuests = reservation.Guests.Count
+                UserId = reservation.UserId,
+                UserName = reservation.UserName,
+                NumberOfGuests = reservation.NumberOfGuests
             };
         }
 
@@ -27,7 +30,10 @@ namespace HostelBookingSystem.Mappers
             {
                 StartDate = addReservationDto.StartDate,
                 EndDate = addReservationDto.EndDate,
-                RoomId = addReservationDto.RoomId
+                RoomId = addReservationDto.RoomId,
+                UserId = addReservationDto.UserId,
+                UserName = addReservationDto.UserName,
+                NumberOfGuests = addReservationDto.NumberOfGuests
             };
         }
 
@@ -36,6 +42,9 @@ namespace HostelBookingSystem.Mappers
             reservationDb.StartDate = updateReservationDto.StartDate;
             reservationDb.EndDate = updateReservationDto.EndDate;
             reservationDb.RoomId = updateReservationDto.RoomId;
+            reservationDb.UserId = updateReservationDto.UserId;
+            reservationDb.UserName = updateReservationDto.UserName;
+            reservationDb.NumberOfGuests = updateReservationDto.NumberOfGuests;
 
             return reservationDb;
         }
