@@ -20,9 +20,7 @@ namespace HostelBookingSystem.Controllers
 
         private IReservationService _reservationService;
 
-        // The service is a parameter for the controller
-        // because it's required for the controller to be instantiated
-        public ReservationController(IReservationService reservationService) // Dependency Injection
+        public ReservationController(IReservationService reservationService)
         {
             _reservationService = reservationService;
         }

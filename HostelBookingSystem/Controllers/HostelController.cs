@@ -13,14 +13,11 @@ namespace HostelBookingSystem.Controllers
     {
         private IHostelService _hostelService;
 
-        // The service is a parameter for the controller
-        // because it's required for the controller to be instantiated
         public HostelController(IHostelService hostelService)
         {
             _hostelService = hostelService;
         }
 
-        // GET ALL HOSTELS
         [HttpGet]
         public ActionResult<List<HostelDto>> GetAll()
         {
@@ -34,7 +31,6 @@ namespace HostelBookingSystem.Controllers
             }
         }
 
-        // GET HOSTEL BY ID
         [HttpGet("{id}")]
         public ActionResult<HostelDto> GetById(int id)
         {
@@ -53,7 +49,6 @@ namespace HostelBookingSystem.Controllers
             }
         }
 
-        // ADD HOSTEL
         [HttpPost("addHostel")]
         public IActionResult AddHostel([FromBody] AddHostelDto addHostelDto)
         {

@@ -19,7 +19,6 @@ namespace HostelBookingSystem.Controllers
             _roomService = roomService;
         }
 
-        // GET ALL ROOMS
         [HttpGet]
         public ActionResult<List<RoomDto>> Get()
         {
@@ -33,7 +32,6 @@ namespace HostelBookingSystem.Controllers
             }
         }
 
-        // GET ROOM BY ID
         [HttpGet("{id}")]
         public ActionResult<RoomDto> GetById(int id)
         {
@@ -52,7 +50,6 @@ namespace HostelBookingSystem.Controllers
             }
         }
 
-        // ADD ROOM
         [HttpPost("addRoom")]
         public IActionResult AddRoom([FromBody] AddRoomDto addRoomDto) 
         { 
@@ -71,7 +68,6 @@ namespace HostelBookingSystem.Controllers
             }
         }
 
-        // DELETE ROOM
         [HttpDelete("deleteRoom/{id}")]
         public IActionResult DeleteRoom(int id)
         {

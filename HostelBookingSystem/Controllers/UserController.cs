@@ -51,7 +51,7 @@ namespace HostelBookingSystem.Controllers
             }
         }
 
-        [AllowAnonymous] //no token needed (we can not be logged in before login)
+        [AllowAnonymous]
         [HttpPost("login")]
         public ActionResult<LoggedUserDataDto> Login([FromBody] LoginUserDto loginDto)
         {
