@@ -21,9 +21,6 @@ namespace HostelBookingSystem.HelpersClassLib
         // Injecting the repositories
         public static void InjectRepositories(IServiceCollection services)
         {
-            // .AddTransient does the following:
-            // When the app needs to use the methods in the generic interface IRepository,
-            // it will receive the appropriate implementation for each class
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<DataAccess.Interfaces.IRepository<User>, UserRepository>();
             services.AddTransient<DataAccess.IRepository<Hostel>, HostelRepository>();
